@@ -26,6 +26,20 @@ class MyClass extends StatefulWidget {
 }
 
 class _MyClassState extends State<MyClass> {
+  final bluetoothList = [
+    "Mirza",
+    "Iyad",
+    "Ying Wei",
+    "Yushu",
+    "Nano",
+    "Dr Lim",
+    "Carol",
+    "Revon",
+    "Kak Aieshah"
+  ];
+  final wifiList = ["SP_1G", "SP_2G", "SP_3G", "SP_4G", "SP_5G"];
+  final _biggerFont = TextStyle(fontSize: 18.0);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,7 +52,14 @@ class _MyClassState extends State<MyClass> {
           child: Column(
             children: <Widget>[
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return _bLListScreen(bluetoothList);
+                    }),
+                  );
+                },
                 child: Text('Scan Bluetooh Devices',
                     style: TextStyle(fontSize: 20)),
               ),
@@ -46,17 +67,88 @@ class _MyClassState extends State<MyClass> {
                 onPressed: () {},
                 child: Text('Settings', style: TextStyle(fontSize: 20)),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('Enabled Button', style: TextStyle(fontSize: 20)),
-              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget _bLListScreen(List<String> bl) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Scanned Bluetooth"),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ),
+        body: _buildList(bl),
+      ),
+    );
+  }
+
+  Widget _buildList(List<String> bluetoothList) {
+    return ListView.separated(
+      itemCount: bluetoothList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(bluetoothList[index]),
+          trailing: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return _WifiScreenState(wflist: wifiList);
+                }),
+              );
+            },
+            child: Text('Connect', style: TextStyle(fontSize: 15)),
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+    );
+  }
 }
+
+class _WifiScreenState extends StatelessWidget {
+  final List<String> wflist;
+  _WifiScreenState({this.wflist});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Choose WIFI"),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        body: ListView.separated(
+          itemCount: wflist.length,
+          itemBuilder: (BuildContext context, int index) {
+            return TextButton(
+              child: Text(wflist[index]),
+              onPressed: () {
+                print(wflist[index]);
+              },
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================================================
 
 class RandomWords extends StatefulWidget {
   @override
@@ -139,12 +231,12 @@ class _RandomWordsState extends State<RandomWords> {
   Widget _buildSuggestions() {
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider();
 
-          final index = i ~/ 2; /*3*/
+          final index = i ~/ 2;
           if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+            _suggestions.addAll(generateWordPairs().take(10));
           }
           return _buildRow(_suggestions[index]);
         });
