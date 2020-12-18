@@ -5,6 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
+import './bluetooth.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: MyClass(),
+      home: FlutterBlueApp(),
     );
   }
 }
