@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'widgets.dart';
 
-void main() {
-  runApp(FlutterBlueApp());
-}
-
 class FlutterBlueApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

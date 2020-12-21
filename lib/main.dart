@@ -7,7 +7,7 @@ import 'package:english_words/english_words.dart';
 
 import './bluetooth.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(FlutterBlueApp());
 
 class MyApp extends StatelessWidget {
   @override
